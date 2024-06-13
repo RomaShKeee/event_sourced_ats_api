@@ -12,4 +12,14 @@ class Application::Event < ApplicationRecord
   self.table_name = 'application_events'
 
   belongs_to :application, autosave: false
+
+  # Replays the events for a given application
+  #
+  # @param application [Application] the application for which to replay events
+  # @return [void]
+  def self.replay_events(application)
+    where(application:).order(:created_at).each do |event|
+      event.replay(application)
+    end
+  end
 end

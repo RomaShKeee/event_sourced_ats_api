@@ -35,6 +35,14 @@ RSpec.describe Eventable, type: :model do
     end
   end
 
+  describe '#replay' do
+    it 'applies the event to the aggregate and saves the aggregate' do
+      aggregate = job
+      event.replay(aggregate)
+      expect(aggregate).to be_persisted
+    end
+  end
+
   describe '#aggregate=' do
     it 'sets the aggregate the event belongs to' do
       aggregate = job

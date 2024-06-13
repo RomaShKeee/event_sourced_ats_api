@@ -13,6 +13,10 @@ class Job::Event < ApplicationRecord
 
   belongs_to :job, autosave: false
 
+  # Replays the events for a given job
+  #
+  # @param job [Job] the job for which to replay events
+  # @return [void]
   def self.replay_events(job)
     where(job:).order(:created_at).each do |event|
       event.replay(job)

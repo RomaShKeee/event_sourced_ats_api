@@ -38,6 +38,16 @@ module Eventable
     aggregate
   end
 
+  # Replays the event on the given aggregate. This involves applying the event to the aggregate
+  # and then saving the aggregate.
+  #
+  # @param aggregate [Object] the aggregate to replay the event on
+  # @return [void]
+  def replay(aggregate)
+    apply(aggregate)
+    aggregate.save!
+  end
+
   # Sets the aggregate the event belongs to.
   #
   # @param model [Object] the aggregate model
